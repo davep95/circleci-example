@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Starting fake deploy"
+sleep 15
+echo "Fake deploy done."

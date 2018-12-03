@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Starting fake test"
+sleep 15
+echo "Fake test is done."
