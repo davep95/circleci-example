@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Run Test File
+          command: |
+             .test/test 
+
+workflows:
+  version: 2.1
+  test:
+    jobs:
+      - test
