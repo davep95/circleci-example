@@ -11,6 +11,8 @@ jobs:
              ./.test/test 
              
   publish-github-release:
+    docker:
+      - image: circleci/golang:1.8
     steps:
       - run: 
           name: "Publish Release on GitHub"
