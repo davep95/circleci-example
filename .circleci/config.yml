@@ -36,14 +36,14 @@ workflows:
 
 # On approval of the `hold` job, any successive job that requires the `hold` job will run. 
 # In this case, a user is manually triggering the deploy job.
-      # - publish-github-release:
-      #     requires:
-      #       - hold
-      #     filters:
-      #       branches:
-      #         ignore: 
-      #           - /.*/
-      #       tags: 
-      #         only: 
-      #           - /^\d+\.\d+\.\d+$/
+      - publish-github-release:
+          requires:
+            - hold
+          filters:
+            branches:
+              ignore: 
+                - /.*/
+            # tags: 
+            #   only: 
+            #     - /^\d+\.\d+\.\d+$/
 
