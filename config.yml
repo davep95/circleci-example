@@ -1,21 +1,24 @@
 version: 2
+
+
 jobs:
   test:
     docker:
-      - image: cibuilds/github:0.10
+      - image: debian:stretch
     steps:
       - checkout
       - run:
           name: Run Test File
           command: |
              .test/test 
-  publish-github-release:
-    steps:
-      - run: 
-          name: "Publish Release on GitHub"
-          command: | 
-            go get -u github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+             
+    publish-github-release:
+      steps:
+        - run: 
+            name: "Publish Release on GitHub"
+            command: | 
+              go get -u github.com/tcnksm/ghr
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
 
 workflows:
   version: 2
