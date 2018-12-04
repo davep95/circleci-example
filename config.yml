@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: debian:stretch
+      - image: cibuilds/github:0.10
     steps:
       - checkout
       - run:
@@ -10,8 +10,6 @@ jobs:
           command: |
              .test/test 
   publish-github-release:
-    docker:
-      - image: cibuilds/github:0.10
     steps:
       - run: 
           name: "Publish Release on GitHub"
