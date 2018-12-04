@@ -1,0 +1,36 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Run Test File
+          command: |
+             .test/test 
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - name: "Publish Release on GitHub"
+      - run: 
+        command: | 
+          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1}
+
+workflows:
+  version: 2.1
+  build-test-and-approval-deploy:
+    jobs:
+      - test
+      - hold:
+          type: approval 
+      # On approval of the `hold` job, any successive job that requires the `hold` job will run. 
+      # In this case, a user is manually triggering the deploy job.
+      - publish-github-release:
+          requires:
+            - hold
+          filters:
+            branches:
+              ignore: /.*/
+
