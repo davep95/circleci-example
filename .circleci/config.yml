@@ -1,6 +1,4 @@
 version: 2
-
-
 jobs:
   test:
     docker:
@@ -12,13 +10,13 @@ jobs:
           command: |
              ./.test/test 
              
-    publish-github-release:
-      steps:
-        - run: 
-            name: "Publish Release on GitHub"
-            command: | 
-              go get -u github.com/tcnksm/ghr
-              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+  publish-github-release:
+    steps:
+      - run: 
+          name: "Publish Release on GitHub"
+          command: | 
+            go get -u github.com/tcnksm/ghr
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
 
 workflows:
   version: 2
@@ -34,8 +32,6 @@ workflows:
           requires: 
             - test
 
-# On approval of the `hold` job, any successive job that requires the `hold` job will run. 
-# In this case, a user is manually triggering the deploy job.
       - publish-github-release:
           requires:
             - hold
